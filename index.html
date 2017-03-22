@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>I can haz quick meeting?</title>
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.0/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="index.css"></link>
+</head>
+<body>
+    <header class="hero is-primary is-bold">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    I can haz quick meeting?
+                </h1>
+                <h2 class="subtitle">
+                    A #TeamRechts project
+                </h2>
+            </div>
+        </div>
+    </header>
+
+    <main class=container>
+        <table class="table is-striped">
+            <thead><tr>
+                <th>Kamer</th>
+                <th>&nbsp;</th>
+                <th>Nu</th>
+                <th>Daarna</th>
+            </tr></thead>
+            <tbody>
+                <tr class=room data-id=maaskamer>
+                    <td class=name>Maaskamer</td>
+                    <td><span class="tag is-medium is-success">Vrij</span></td>
+                    <td class=current_status>Vrij tot 15:30 uur (20 minuten)</td>
+                    <td class=upcoming_status>&nbsp;</td>
+                </tr>
+                <tr class=room data-id=spreekkamer>
+                    <td class=name>Spreekkamer</td>
+                    <td><span class="tag is-medium is-success">Vrij</span></td>
+                    <td class=current_status>Vrij tot 15:30 uur (30 minuten)</td>
+                    <td class=upcoming_status>&nbsp;</td>
+                </tr>
+                <tr class=room data-id=Podiumkamer>
+                    <td class=name>Podiumkamer</td>
+                    <td><span class="tag is-medium is-danger">Bezet</span></td>
+                    <td class=current_status>Bezet tot 15:30 uur (20 minuten)</td>
+                    <td class=upcoming_status>Vrij tot 16:00 uur (30 minuten)</td>
+                </tr>
+                <tr class=room data-id=maaskamer>
+                    <td class=name>Maaskamer</td>
+                    <td><span class="tag is-medium is-success">Vrij</span></td>
+                    <td class=current_status>Vrij tot 15:30 uur</td>
+                    <td class=upcoming_status>&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="content has-text-centered">
+                <p>
+                    <strong>I can haz quick meeting?</strong> by <a href="http://jakobbuis.nl">Jakob Buis</a>.
+                    Built using <a href="http://bulma.io">bulma</a> and the <a href="https://developers.google.com/google-apps/calendar/quickstart/js">Google Calendar Javascript API</a>.
+                </p>
+                <p>
+                    <a class="icon" href="https://github.com/jgthms/bulma">
+                        <i class="fa fa-github"></i>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+<script type="text/javascript" src="index.js"></script>
+</body>
+</html>
