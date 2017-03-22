@@ -25,6 +25,23 @@
 
     <main>
         <div class="container">
+            <div class="modal">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head">
+                    <p class="modal-card-title">Aanmelden bij Google Calendar</p>
+                    </header>
+                    <section class="modal-card-body">
+                        <p>
+                            Om de vergaderruimtes te tonen, hebben we toestemming nodig om je Google Calendar te lezen.
+                        </p>
+                    </section>
+                    <footer class="modal-card-foot">
+                        <a class="button is-primary">Aanmelden met Google Calendar</a>
+                    </footer>
+                </div>
+            </div>
+
             <table class="table is-striped">
                 <thead><tr>
                     <th>Kamer</th>
@@ -86,6 +103,7 @@
         </div>
     </main>
 
+    <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
     <script type="text/javascript" src="config.js"></script>
     <script type="text/javascript" src="index.js"></script>
 </body>

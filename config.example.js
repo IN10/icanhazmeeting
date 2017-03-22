@@ -1,5 +1,5 @@
 window.config = {
-    google: {
-        apikey: '',
-    }
+    oauth: {
+        client_id: '',
+    },
 };
