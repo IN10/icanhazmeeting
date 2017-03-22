@@ -4,6 +4,7 @@
     <title>I can haz quick meeting?</title>
 
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.0/css/bulma.min.css">
+    <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" integrity="sha384-dNpIIXE8U05kAbPhy3G1cz+yZmTzA6CY8Vg/u2L9xRnHjJiAK76m2BIEaSEV+/aU" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="index.css"></link>
 </head>
 <body>
@@ -20,59 +21,69 @@
         </div>
     </header>
 
-    <main class=container>
-        <table class="table is-striped">
-            <thead><tr>
-                <th>Kamer</th>
-                <th>&nbsp;</th>
-                <th>Nu</th>
-                <th>Daarna</th>
-            </tr></thead>
-            <tbody>
-                <tr class=room data-id=maaskamer>
-                    <td class=name>Maaskamer</td>
-                    <td><span class="tag is-medium is-success">Vrij</span></td>
-                    <td class=current_status>Vrij tot 15:30 uur (20 minuten)</td>
-                    <td class=upcoming_status>&nbsp;</td>
-                </tr>
-                <tr class=room data-id=spreekkamer>
-                    <td class=name>Spreekkamer</td>
-                    <td><span class="tag is-medium is-success">Vrij</span></td>
-                    <td class=current_status>Vrij tot 15:30 uur (30 minuten)</td>
-                    <td class=upcoming_status>&nbsp;</td>
-                </tr>
-                <tr class=room data-id=Podiumkamer>
-                    <td class=name>Podiumkamer</td>
-                    <td><span class="tag is-medium is-danger">Bezet</span></td>
-                    <td class=current_status>Bezet tot 15:30 uur (20 minuten)</td>
-                    <td class=upcoming_status>Vrij tot 16:00 uur (30 minuten)</td>
-                </tr>
-                <tr class=room data-id=maaskamer>
-                    <td class=name>Maaskamer</td>
-                    <td><span class="tag is-medium is-success">Vrij</span></td>
-                    <td class=current_status>Vrij tot 15:30 uur</td>
-                    <td class=upcoming_status>&nbsp;</td>
-                </tr>
-            </tbody>
-        </table>
+    <main>
+        <div class="container">
+            <table class="table is-striped">
+                <thead><tr>
+                    <th>Kamer</th>
+                    <th>&nbsp;</th>
+                    <th colspan=2>Nu</th>
+                    <th colspan=2>Daarna</th>
+                </tr></thead>
+                <tbody>
+                    <tr class=room data-id=maaskamer>
+                        <td class=name>Maaskamer</td>
+                        <td><span class="tag is-medium is-success">Vrij</span></td>
+                        <td class=current_status>Vrij tot 15:30 uur</td>
+                        <td class=current_duration>20 minuten</td>
+                        <td class=upcoming_status>&nbsp;</td>
+                        <td class=upcoming_duration>&nbsp;</td>
+                    </tr>
+                    <tr class=room data-id=spreekkamer>
+                        <td class=name>Spreekkamer</td>
+                        <td><span class="tag is-medium is-success">Vrij</span></td>
+                        <td class=current_status>Vrij tot 15:30 uur</td>
+                        <td class=current_duration>20 minuten</td>
+                        <td class=upcoming_status>&nbsp;</td>
+                        <td class=upcoming_duration>&nbsp;</td>
+                    </tr>
+                    <tr class=room data-id=Podiumkamer>
+                        <td class=name>Podiumkamer</td>
+                        <td><span class="tag is-medium is-danger">Bezet</span></td>
+                        <td class=current_status>Bezet tot 15:30 uur</td>
+                        <td class=current_duration>20 minuten</td>
+                        <td class=upcoming_status>Vrij tot 15:30 uur</td>
+                        <td class=upcoming_duration>20 minuten</td>
+                    </tr>
+                    <tr class=room data-id=standuplinks>
+                        <td class=name>Standup links</td>
+                        <td><span class="tag is-medium is-success">Vrij</span></td>
+                        <td class=current_status>Vrij tot 15:30 uur</td>
+                        <td class=current_duration>20 minuten</td>
+                        <td class=upcoming_status>&nbsp;</td>
+                        <td class=upcoming_duration>&nbsp;</td>
+                    </tr>
+                    <tr class=room data-id=standuprechts>
+                        <td class=name>Standup rechts</td>
+                        <td><span class="tag is-medium is-success">Vrij</span></td>
+                        <td class=current_status>Vrij tot 15:30 uur</td>
+                        <td class=current_duration>20 minuten</td>
+                        <td class=upcoming_status>&nbsp;</td>
+                        <td class=upcoming_duration>&nbsp;</td>
+                    </tr>
+                    <tr class=room data-id=standupcreate>
+                        <td class=name>Standup Create</td>
+                        <td><span class="tag is-medium is-success">Vrij</span></td>
+                        <td class=current_status>Vrij tot 15:30 uur</td>
+                        <td class=current_duration>20 minuten</td>
+                        <td class=upcoming_status>&nbsp;</td>
+                        <td class=upcoming_duration>&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </main>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="content has-text-centered">
-                <p>
-                    <strong>I can haz quick meeting?</strong> by <a href="http://jakobbuis.nl">Jakob Buis</a>.
-                    Built using <a href="http://bulma.io">bulma</a> and the <a href="https://developers.google.com/google-apps/calendar/quickstart/js">Google Calendar Javascript API</a>.
-                </p>
-                <p>
-                    <a class="icon" href="https://github.com/jgthms/bulma">
-                        <i class="fa fa-github"></i>
-                    </a>
-                </p>
-            </div>
-        </div>
-    </footer>
-
-<script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="index.js"></script>
 </body>
 </html>

@@ -1,3 +1,7 @@
 .tag.is-medium {
     width: 4em;
 }
+
+.table td {
+    vertical-align: middle;
+}
