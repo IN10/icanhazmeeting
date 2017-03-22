@@ -1,5 +1,7 @@
 window.RoomTracker = {
 
+    key: config.google.apikey,
+
     init: function() {
 
     }
