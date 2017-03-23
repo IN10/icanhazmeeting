@@ -1,9 +1,26 @@
 window.RoomTracker = {
 
     init: function() {
+        RoomTracker.createRows(config.rooms);
         RoomTracker.loginWithGoogle();
     },
 
+    /**
+     * Populate the table with all configured rooms
+     * @param  {Array} rooms
+     */
+    createRows: function(rooms) {
+        var template = document.querySelector('table tbody tr');
+
+        rooms.forEach(function(room) {
+            var row = template.cloneNode(true);
+            row.id = room.id;
+            row.querySelector('.name').innerHTML = room.name;
+            document.querySelector('table tbody').appendChild(row);
+        });
+
+        template.remove();
+    },
 
     /**
      * Load vacancy information for all rooms
