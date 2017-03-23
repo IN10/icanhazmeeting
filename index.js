@@ -27,67 +27,61 @@ window.RoomTracker = {
 
         config.rooms.forEach(function(room) {
 
-            // Get data, some utility variables
+            // Parse and setup datastructures
             var row = document.getElementById(room.id);
             var data = response.result.calendars[room.resourceID];
             var events = data.busy;
-            var now = new Date();
+
+            // References to the cells of the row
+            var currentStatus = row.querySelector('.current_status');
+            var currentDuration = row.querySelector('.current_duration');
+            var upcomingStatus = row.querySelector('.upcoming_status');
 
             // Clear the room! (eh, row!)
-            RoomTracker.clearRow(row);
+            row.querySelectorAll('.indicator, .current_status, .current_duration, .upcoming_status, .upcoming_duration').forEach(function(cell){
+                cell.innerHTML = '&nbsp;';
+            });
 
             // If no data is given, show a warning
             if (!data) {
-                RoomTracker.setRowUnknown(row);
+                RoomTracker.setIndicator(row, null);
+                currentStatus.innerHTML = 'Geen informatie beschikbaar';
                 return;
             }
 
             // If no events are added, the room is free for the rest of the day
             if (events.length == 0) {
                 RoomTracker.setIndicator(row, true);
-                row.querySelector('.current_status').innerHTML = 'De rest van de dag beschikbaar';
+                currentStatus.innerHTML = 'De rest van de dag beschikbaar';
                 return;
             }
 
-            // Process the first event into the now column
-            RoomTracker.setRowNowInformation(row, events[0]);
-        });
-    },
+            // If currently free, show that and the upcoming event
+            var now = new Date();
+            var start = new Date(events[0].start);
+            var end = new Date(events[0].end);
+            if (now < start) {
+                RoomTracker.setIndicator(row, true);
+                currentStatus.innerHTML = 'Vrij tot '+RoomTracker.printTime(start)+' uur';
+                currentDuration.innerHTML = RoomTracker.diffInMinutes(now, start)+' minuten';
+                upcomingStatus.innerHTML = 'Bezet tot '+RoomTracker.printTime(end)+' uur';
+                return;
+            }
 
-    /**
-     * Utility function to clear the contents of a row except the name of the room
-     * @param  {DOMElement} row
-     */
-    clearRow: function(row) {
-        row.querySelectorAll('.indicator, .current_status, .current_duration, .upcoming_status, .upcoming_duration').forEach(function(cell){
-            cell.innerHTML = '&nbsp;';
-        });
-    },
-
-    /**
-     * Set a room to display an "missing data" status
-     * @param {DOMElement} row
-     */
-    setRowUnknown: function(row) {
-        row.querySelector('.indicator').innerHTML = '<span class="tag is-medium">Onbekend</span>';
-        row.querySelector('.current_status').innerHTML = 'Geen informatie beschikbaar';
-    },
-
-    setRowNowInformation: function(row, event) {
-        var now = new Date();
-        var start = new Date(event.start);
-        var end = new Date(event.end);
-
-        if (now > start && now < end) {
+            // Currently occupied, show that in the first column
             RoomTracker.setIndicator(row, false);
-            row.querySelector('.current_status').innerHTML = 'Bezet tot '+RoomTracker.printTime(start)+' uur';
-            row.querySelector('.current_duration').innerHTML = RoomTracker.diffInMinutes(now, start)+' minuten';
-        }
-        else {
-            RoomTracker.setIndicator(row, true);
-            row.querySelector('.current_status').innerHTML = 'Vrij tot '+RoomTracker.printTime(start)+' uur';
-            row.querySelector('.current_duration').innerHTML = RoomTracker.diffInMinutes(now, start)+' minuten';
-        }
+            currentStatus.innerHTML = 'Bezet tot '+RoomTracker.printTime(end)+' uur';
+            currentDuration.innerHTML = RoomTracker.diffInMinutes(now, end)+' minuten';
+
+            // If there are no further events planned, the rest of the day is free
+            if (events.length == 1) {
+                upcomingStatus.innerHTML = 'De rest van de dag beschikbaar';
+            }
+
+            // Otherwise, show the time until the second event
+            var secondStart = new Date(events[1].start);
+            upcomingStatus.innerHTML = 'Vrij tot '+RoomTracker.printTime(secondStart)+' uur';
+        });
     },
 
     /**
@@ -115,11 +109,15 @@ window.RoomTracker = {
      * @param {boolean} free
      */
     setIndicator(row, free) {
-        if (free) {
-            row.querySelector('.indicator').innerHTML = '<span class="tag is-medium is-success">Vrij</span>';
+        var indicator = row.querySelector('.indicator');
+        if (free === null) {
+            indicator.innerHTML = '<span class="tag is-medium">Onbekend</span>';
+        }
+        else if (free === true) {
+            indicator.innerHTML = '<span class="tag is-medium is-success">Vrij</span>';
         }
         else {
-            row.querySelector('.indicator').innerHTML = '<span class="tag is-medium is-danger">Bezet</span>';
+            indicator.innerHTML = '<span class="tag is-medium is-danger">Bezet</span>';
         }
     },
 
@@ -158,6 +156,7 @@ window.RoomTracker = {
     },
 };
 
+// Initialize when the DOM is ready
 if (document.readyState != 'loading'){
     RoomTracker.init();
 } else {
