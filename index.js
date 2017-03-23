@@ -36,6 +36,16 @@ window.RoomTracker = {
         });
     },
 
+
+    /**
+     * Run the main process to refresh data on a 30 second timer
+     */
+    tick: function() {
+        console.log('tick');
+        RoomTracker.getRoomData().then(RoomTracker.updateTable);
+        setTimeout(RoomTracker.tick, 30*1000);
+    },
+
     /**
      * Update the main table with the new data
      */
@@ -148,7 +158,7 @@ window.RoomTracker = {
             console.log('Signed in', isSignedIn);
             if (isSignedIn) {
                 modal.classList.remove('is-active');
-                RoomTracker.getRoomData().then(RoomTracker.updateTable);
+                RoomTracker.tick();
             }
             else {
                 modal.classList.add('is-active');
