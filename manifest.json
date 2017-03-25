@@ -1,5 +1,10 @@
 {
- "name": "App",
+ "short_name": "Icanhazmeeting?",
+ "name": "I can haz meeting?",
+ "start_url": "/?utm_source=homescreen",
+ "background_color": "#00D1B2",
+ "theme_color": "#00D1B2",
+ "display": "standalone",
  "icons": [
   {
    "src": "\/images\/favicon\/android-icon-36x36.png",
