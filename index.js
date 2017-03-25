@@ -91,7 +91,7 @@ window.RoomTracker = {
                 RoomTracker.setIndicator(el, true);
                 currentStatus.innerHTML = 'Vrij tot '+RoomTracker.printTime(start)+' uur';
                 currentDuration.innerHTML = RoomTracker.diffInMinutes(now, start)+' minuten';
-                upcomingStatus.innerHTML = 'Bezet tot '+RoomTracker.printTime(end)+' uur';
+                upcomingStatus.innerHTML = 'Daarna bezet tot '+RoomTracker.printTime(end)+' uur';
                 return;
             }
 
