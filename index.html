@@ -47,7 +47,7 @@
                 <div class="modal-background"></div>
                 <div class="modal-card">
                     <header class="modal-card-head">
-                    <p class="modal-card-title">Aanmelden bij Google Calendar</p>
+                        <p class="modal-card-title">Aanmelden bij Google Calendar</p>
                     </header>
                     <section class="modal-card-body">
                         <p>
@@ -60,23 +60,27 @@
                 </div>
             </div>
 
-            <table class="table is-striped">
-                <thead><tr>
-                    <th>Kamer</th>
-                    <th>&nbsp;</th>
-                    <th colspan=2>Nu</th>
-                    <th colspan=2>Daarna</th>
-                </tr></thead>
-                <tbody>
-                    <tr>
-                        <td class=name></td>
-                        <td class=indicator></td>
-                        <td class=current_status></td>
-                        <td class=current_duration></td>
-                        <td class=upcoming_status></td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="container rooms is-clearfix">
+                <div class="room box">
+                    <article class="media">
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <span class="indicator tag is-primary"></span>
+                                    <strong class=name>Maaskamer</strong><br>
+                                    <span class="current">
+                                        <small class="status"></small>
+                                        <small class="duration is-pulled-right"></small>
+                                    </span><br>
+                                    <span class="upcoming">
+                                        <small class="status"></small>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
         </div>
     </main>
 

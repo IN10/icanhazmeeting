@@ -1,7 +1,10 @@
-.tag.is-medium {
-    width: 6em;
+.rooms {
+    margin-top: 1em;
 }
-
-.table td {
-    vertical-align: middle;
+.room {
+    width: 20em;
+    height: 7em;
+    float: left;
+    margin-right: 1em;
+    margin-bottom: 1em;
 }

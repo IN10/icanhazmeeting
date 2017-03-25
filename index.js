@@ -10,13 +10,13 @@ window.RoomTracker = {
      * @param  {Array} rooms
      */
     createRows: function(rooms) {
-        var template = document.querySelector('table tbody tr');
+        var template = document.querySelector('.room');
 
         rooms.forEach(function(room) {
-            var row = template.cloneNode(true);
-            row.id = room.id;
-            row.querySelector('.name').innerHTML = room.name;
-            document.querySelector('table tbody').appendChild(row);
+            var el = template.cloneNode(true);
+            el.id = room.id;
+            el.querySelector('.name').innerHTML = room.name;
+            document.querySelector('.rooms').appendChild(el);
         });
 
         template.remove();
@@ -55,30 +55,30 @@ window.RoomTracker = {
         config.rooms.forEach(function(room) {
 
             // Parse and setup datastructures
-            var row = document.getElementById(room.id);
+            var el = document.getElementById(room.id);
             var data = response.result.calendars[room.resourceID];
             var events = data.busy;
 
-            // References to the cells of the row
-            var currentStatus = row.querySelector('.current_status');
-            var currentDuration = row.querySelector('.current_duration');
-            var upcomingStatus = row.querySelector('.upcoming_status');
+            // References to the output locations
+            var currentStatus = el.querySelector('.current .status');
+            var currentDuration = el.querySelector('.current .duration');
+            var upcomingStatus = el.querySelector('.upcoming .status');
 
-            // Clear the room! (eh, row!)
-            row.querySelectorAll('.indicator, .current_status, .current_duration, .upcoming_status, .upcoming_duration').forEach(function(cell){
+            // Clear the room!
+            el.querySelectorAll('.indicator, .current_status, .current_duration, .upcoming_status').forEach(function(cell){
                 cell.innerHTML = '&nbsp;';
             });
 
             // If no data is given, show a warning
             if (!data) {
-                RoomTracker.setIndicator(row, null);
+                RoomTracker.setIndicator(el, null);
                 currentStatus.innerHTML = 'Geen informatie beschikbaar';
                 return;
             }
 
             // If no events are added, the room is free for the rest of the day
             if (events.length == 0) {
-                RoomTracker.setIndicator(row, true);
+                RoomTracker.setIndicator(el, true);
                 currentStatus.innerHTML = 'De rest van de dag beschikbaar';
                 return;
             }
@@ -88,7 +88,7 @@ window.RoomTracker = {
             var start = new Date(events[0].start);
             var end = new Date(events[0].end);
             if (now < start) {
-                RoomTracker.setIndicator(row, true);
+                RoomTracker.setIndicator(el, true);
                 currentStatus.innerHTML = 'Vrij tot '+RoomTracker.printTime(start)+' uur';
                 currentDuration.innerHTML = RoomTracker.diffInMinutes(now, start)+' minuten';
                 upcomingStatus.innerHTML = 'Bezet tot '+RoomTracker.printTime(end)+' uur';
@@ -96,7 +96,7 @@ window.RoomTracker = {
             }
 
             // Currently occupied, show that in the first column
-            RoomTracker.setIndicator(row, false);
+            RoomTracker.setIndicator(el, false);
             currentStatus.innerHTML = 'Bezet tot '+RoomTracker.printTime(end)+' uur';
             currentDuration.innerHTML = RoomTracker.diffInMinutes(now, end)+' minuten';
 
@@ -107,7 +107,7 @@ window.RoomTracker = {
 
             // Otherwise, show the time until the second event
             var secondStart = new Date(events[1].start);
-            upcomingStatus.innerHTML = 'Vrij tot '+RoomTracker.printTime(secondStart)+' uur';
+            upcomingStatus.innerHTML = 'Daarna vrij tot '+RoomTracker.printTime(secondStart)+' uur';
         });
     },
 
@@ -135,16 +135,16 @@ window.RoomTracker = {
      * @param {DOMElement} row
      * @param {boolean} free
      */
-    setIndicator(row, free) {
-        var indicator = row.querySelector('.indicator');
+    setIndicator(el, free) {
+        var indicator = el.querySelector('.indicator');
         if (free === null) {
-            indicator.innerHTML = '<span class="tag is-medium">Onbekend</span>';
+            indicator.outerHTML = '<span class="indicator tag">Onbekend</span>';
         }
         else if (free === true) {
-            indicator.innerHTML = '<span class="tag is-medium is-success">Vrij</span>';
+            indicator.outerHTML = '<span class="indicator tag is-success">Vrij</span>';
         }
         else {
-            indicator.innerHTML = '<span class="tag is-medium is-danger">Bezet</span>';
+            indicator.outerHTML = '<span class="indicator tag is-danger">Bezet</span>';
         }
     },
 
