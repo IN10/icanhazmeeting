@@ -1,4 +1,4 @@
-# I can haz quick meeting?
+# I can haz meeting?
 
 ## Installation
 1. Create a OAuth2 client ID on the [Google API Manager](https://console.developers.google.com). Choose "Web Application" as the Application type and add [localhost:8080](http://localhost:8080) to the Authorised Javascript origins.
