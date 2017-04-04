@@ -3,6 +3,7 @@ window.RoomTracker = {
     init: function() {
         RoomTracker.createRows(config.rooms);
         RoomTracker.loginWithGoogle();
+        RoomTracker.displayClock();
     },
 
     /**
@@ -192,6 +193,14 @@ window.RoomTracker = {
                 });
             });
         });
+    },
+
+    /**
+     * Show and update a real-time clock in the top-right of the screen
+     */
+    displayClock: function() {
+        document.getElementById('time').innerHTML = RoomTracker.printTime(new Date());
+        setTimeout(RoomTracker.displayClock, 5000);
     },
 };
 
