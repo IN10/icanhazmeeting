@@ -1,9 +1,14 @@
 window.RoomTracker = {
 
     init: function() {
+        // Initially sort all rooms by name
+        config.rooms = config.rooms.sort(function(a, b) {
+            return a.name >= b.name;
+        });
+
         RoomTracker.createRows(config.rooms);
-        RoomTracker.loginWithGoogle();
         RoomTracker.displayClock();
+        RoomTracker.loginWithGoogle();
     },
 
     /**
@@ -112,6 +117,8 @@ window.RoomTracker = {
             upcomingStatus.innerHTML = 'Daarna vrij tot '+RoomTracker.printTime(secondStart)+' uur';
             upcomingDuration.innerHTML = RoomTracker.humanTimeDiff(now, secondStart);
         });
+
+        RoomTracker.sortRooms();
     },
 
     /**
@@ -202,6 +209,13 @@ window.RoomTracker = {
         document.getElementById('time').innerHTML = RoomTracker.printTime(new Date());
         setTimeout(RoomTracker.displayClock, 5000);
     },
+
+    /**
+     * Sort the rooms in priority order: free rooms first, than alphabetically
+     */
+    sortRooms: function() {
+
+    }
 };
 
 // Initialize when the DOM is ready
