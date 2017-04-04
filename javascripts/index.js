@@ -130,11 +130,13 @@ window.RoomTracker = {
         if (inMinutes <  60) {
             return inMinutes + ' min';
         }
-        else {
-            var hours = Math.floor(inMinutes / 60);
-            var minutes = inMinutes % 60;
-            return hours + ' uur ' + minutes + ' min';
+
+        var hours = Math.floor(inMinutes / 60);
+        var minutes = inMinutes % 60;
+        if (minutes == 0) {
+            return hours + ' uur ';
         }
+        return hours + ' uur ' + minutes + ' min';
     },
 
     /**
