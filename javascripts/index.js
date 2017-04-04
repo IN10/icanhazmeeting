@@ -62,9 +62,10 @@ window.RoomTracker = {
             var currentStatus = el.querySelector('.current .status');
             var currentDuration = el.querySelector('.current .duration');
             var upcomingStatus = el.querySelector('.upcoming .status');
+            var upcomingDuration = el.querySelector('.upcoming .duration');
 
             // Clear the room!
-            el.querySelectorAll('.indicator, .current .status, .current .duration, .upcoming .status').forEach(function(cell){
+            el.querySelectorAll('.indicator, .current .status, .current .duration, .upcoming .status, .upcoming .duration').forEach(function(cell){
                 cell.innerHTML = '&nbsp;';
             });
 
@@ -91,6 +92,7 @@ window.RoomTracker = {
                 currentStatus.innerHTML = 'Vrij tot '+RoomTracker.printTime(start)+' uur';
                 currentDuration.innerHTML = RoomTracker.humanTimeDiff(now, start);
                 upcomingStatus.innerHTML = 'Daarna bezet tot '+RoomTracker.printTime(end)+' uur';
+                upcomingDuration.innerHTML = RoomTracker.humanTimeDiff(start, end);
                 return;
             }
 
@@ -107,6 +109,7 @@ window.RoomTracker = {
             // Otherwise, show the time until the second event
             var secondStart = new Date(events[1].start);
             upcomingStatus.innerHTML = 'Daarna vrij tot '+RoomTracker.printTime(secondStart)+' uur';
+            upcomingDuration.innerHTML = RoomTracker.humanTimeDiff(now, secondStart);
         });
     },
 
