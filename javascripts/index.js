@@ -90,7 +90,7 @@ window.RoomTracker = {
             if (now < start) {
                 RoomTracker.setIndicator(el, true);
                 currentStatus.innerHTML = 'Vrij tot '+RoomTracker.printTime(start)+' uur';
-                currentDuration.innerHTML = RoomTracker.diffInMinutes(now, start)+' minuten';
+                currentDuration.innerHTML = RoomTracker.humanTimeDiff(now, start);
                 upcomingStatus.innerHTML = 'Daarna bezet tot '+RoomTracker.printTime(end)+' uur';
                 return;
             }
@@ -98,7 +98,7 @@ window.RoomTracker = {
             // Currently occupied, show that in the first column
             RoomTracker.setIndicator(el, false);
             currentStatus.innerHTML = 'Bezet tot '+RoomTracker.printTime(end)+' uur';
-            currentDuration.innerHTML = RoomTracker.diffInMinutes(now, end)+' minuten';
+            currentDuration.innerHTML = RoomTracker.humanTimeDiff(now, end);
 
             // If there are no further events planned, the rest of the day is free
             if (events.length == 1) {
@@ -126,8 +126,16 @@ window.RoomTracker = {
      * @param  {Date} b
      * @return {integer}
      */
-    diffInMinutes: function(a, b) {
-        return Math.round(Math.abs(a - b) / 60000);
+    humanTimeDiff: function(a, b) {
+        var inMinutes = Math.round(Math.abs(a - b) / 60000);
+        if (inMinutes <  60) {
+            return inMinutes + ' min';
+        }
+        else {
+            var hours = Math.floor(inMinutes / 60);
+            var minutes = inMinutes % 60;
+            return hours + ' uur ' + minutes + ' min';
+        }
     },
 
     /**
