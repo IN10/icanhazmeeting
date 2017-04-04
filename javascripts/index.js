@@ -215,7 +215,21 @@ window.RoomTracker = {
      * Sort the rooms in priority order: free rooms first, than alphabetically
      */
     sortRooms: function() {
+        var container = document.querySelector('.rooms');
+        var rooms = [].slice.call(container.children).sort(function(a, b) {
+            var a_free = (a.querySelector('.tag.is-success') !== null);
+            var b_free = (b.querySelector('.tag.is-success') !== null);
 
+            // If not both rooms have the same status, show the free room first
+            if (a_free != b_free) {
+                return a_free ? -1 : 1;
+            }
+            else {
+                // otherwise just sort by name
+                return a.querySelector('.name').innerHTML >= b.querySelector('.name').innerHTML;
+            }
+        });
+        rooms.forEach(function(room) {container.appendChild(room); });
     }
 };
 
