@@ -50,7 +50,6 @@ window.RoomTracker = {
      * Update the main table with the new data
      */
     updateTable: function(response) {
-        console.log('Got freebusy response', response);
 
         config.rooms.forEach(function(room) {
 
