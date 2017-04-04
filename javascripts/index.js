@@ -43,14 +43,14 @@ window.RoomTracker = {
      */
     tick: function() {
         console.log('tick');
-        RoomTracker.getRoomData().then(RoomTracker.updateTable);
+        RoomTracker.getRoomData().then(RoomTracker.updateUI);
         setTimeout(RoomTracker.tick, 30*1000);
     },
 
     /**
      * Update the main table with the new data
      */
-    updateTable: function(response) {
+    updateUI: function(response) {
 
         config.rooms.forEach(function(room) {
 
