@@ -65,7 +65,7 @@ window.RoomTracker = {
             var upcomingStatus = el.querySelector('.upcoming .status');
 
             // Clear the room!
-            el.querySelectorAll('.indicator, .current_status, .current_duration, .upcoming_status').forEach(function(cell){
+            el.querySelectorAll('.indicator, .current .status, .current .duration, .upcoming .status').forEach(function(cell){
                 cell.innerHTML = '&nbsp;';
             });
 
