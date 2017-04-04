@@ -110,6 +110,7 @@ window.RoomTracker = {
             // If there are no further events planned, the rest of the day is free
             if (events.length == 1) {
                 upcomingStatus.innerHTML = 'De rest van de dag beschikbaar';
+                return;
             }
 
             // Otherwise, show the time until the second event
