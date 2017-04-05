@@ -3,7 +3,7 @@ window.RoomTracker = {
     tickTimer: null,
 
     init: function() {
-        RoomTracker.createRows(config.rooms);
+        RoomTracker.createRows();
         RoomTracker.displayClock();
         RoomTracker.loginWithGoogle();
     },
@@ -12,10 +12,10 @@ window.RoomTracker = {
      * Populate the table with all configured rooms
      * @param  {Array} rooms
      */
-    createRows: function(rooms) {
+    createRows: function() {
         var template = document.querySelector('.room');
 
-        rooms.forEach(function(room) {
+        config.rooms.forEach(function(room) {
             var el = template.cloneNode(true);
             el.id = room.id;
             el.querySelector('.name').innerHTML = room.name;
