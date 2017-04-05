@@ -3,11 +3,6 @@ window.RoomTracker = {
     tickTimer: null,
 
     init: function() {
-        // Initially sort all rooms by name
-        config.rooms = config.rooms.sort(function(a, b) {
-            return a.name >= b.name;
-        });
-
         RoomTracker.createRows(config.rooms);
         RoomTracker.displayClock();
         RoomTracker.loginWithGoogle();
