@@ -1,5 +1,7 @@
 window.RoomTracker = {
 
+    tickTimer: null,
+
     init: function() {
         // Initially sort all rooms by name
         config.rooms = config.rooms.sort(function(a, b) {
@@ -47,9 +49,13 @@ window.RoomTracker = {
      * Run the main process to refresh data on a 30 second timer
      */
     tick: function() {
+        if (RoomTracker.tickTimer) {
+            clearTimeout(RoomTracker.tickTimer);
+            RoomTracker.tickTimer = null;
+        }
         console.log('tick');
         RoomTracker.getRoomData().then(RoomTracker.updateUI);
-        setTimeout(RoomTracker.tick, 30*1000);
+        RoomTracker.tickTimer = setTimeout(RoomTracker.tick, 30*1000);
     },
 
     /**
