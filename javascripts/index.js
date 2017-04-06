@@ -9,7 +9,7 @@ window.RoomTracker = {
     },
 
     /**
-     * Populate the table with all configured rooms
+     * Populate the user interface with blocks for all configured rooms
      * @param  {Array} rooms
      */
     createRooms: function() {
