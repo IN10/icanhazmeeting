@@ -13,13 +13,23 @@ window.RoomTracker = {
      * @param  {Array} rooms
      */
     createRooms: function() {
-        var template = document.querySelector('.room');
+        var root = document.querySelector('.rooms');
+        var template = document.querySelector('#room_template');
 
-        config.rooms.forEach(function(room) {
-            var el = template.cloneNode(true);
-            el.id = room.id;
-            el.querySelector('.name').innerHTML = room.name;
-            document.querySelector('.rooms').appendChild(el);
+        config.rooms.forEach(function(row) {
+            // Create row to hold these rooms
+            var target = document.createElement('div');
+            target.classList.add('columns');
+            root.appendChild(target);
+
+            // Add rooms
+            row.forEach(function(room){
+                var el = template.cloneNode(true);
+                el.id = "";
+                el.querySelector('.room').id = room.id;
+                el.querySelector('.room .name').innerHTML = room.name;
+                target.appendChild(el);
+            });
         });
 
         template.remove();
@@ -29,13 +39,16 @@ window.RoomTracker = {
      * Load vacancy information for all rooms
      */
     getRoomData: function() {
+        // Flatten the rows out of the rooms
+        var rooms = [].concat.apply([], config.rooms);
+
         var now = new Date();
         var tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1);
         return gapi.client.calendar.freebusy.query({
             maxResults: 100,
             timeMin: now,
             timeMax: tomorrow,
-            items: config.rooms.map(function(room){ return {id: room.resourceID}; }),
+            items: rooms.map(function(room){ return {id: room.resourceID}; }),
         });
     },
 
@@ -61,8 +74,10 @@ window.RoomTracker = {
      */
     updateUI: function(response) {
 
-        config.rooms.forEach(function(room) {
+        // Flatten the rows out of the rooms
+        var rooms = [].concat.apply([], config.rooms);
 
+        rooms.forEach(function(room) {
             // Parse and setup datastructures
             var el = document.getElementById(room.id);
             var data = response.result.calendars[room.resourceID];
@@ -122,8 +137,6 @@ window.RoomTracker = {
             upcomingStatus.innerHTML = 'Daarna vrij tot '+RoomTracker.printTime(secondStart)+' uur';
             upcomingDuration.innerHTML = RoomTracker.humanTimeDiff(now, secondStart);
         });
-
-        RoomTracker.sortRooms();
     },
 
     /**
@@ -214,27 +227,6 @@ window.RoomTracker = {
         document.getElementById('time').innerHTML = RoomTracker.printTime(new Date());
         setTimeout(RoomTracker.displayClock, 5000);
     },
-
-    /**
-     * Sort the rooms in priority order: free rooms first, than alphabetically
-     */
-    sortRooms: function() {
-        var container = document.querySelector('.rooms');
-        var rooms = [].slice.call(container.children).sort(function(a, b) {
-            var a_free = (a.querySelector('.tag.is-success') !== null);
-            var b_free = (b.querySelector('.tag.is-success') !== null);
-
-            // If not both rooms have the same status, show the free room first
-            if (a_free != b_free) {
-                return a_free ? -1 : 1;
-            }
-            else {
-                // otherwise just sort by name
-                return a.querySelector('.name').innerHTML >= b.querySelector('.name').innerHTML;
-            }
-        });
-        rooms.forEach(function(room) {container.appendChild(room); });
-    }
 };
 
 // Initialize when the DOM is ready
