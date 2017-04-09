@@ -1,22 +1,35 @@
 window.RoomTracker = {
 
+    tickTimer: null,
+
     init: function() {
-        RoomTracker.createRows(config.rooms);
+        RoomTracker.createRooms();
+        RoomTracker.displayClock();
         RoomTracker.loginWithGoogle();
     },
 
     /**
-     * Populate the table with all configured rooms
+     * Populate the user interface with blocks for all configured rooms
      * @param  {Array} rooms
      */
-    createRows: function(rooms) {
-        var template = document.querySelector('.room');
+    createRooms: function() {
+        var root = document.querySelector('.rooms');
+        var template = document.querySelector('#room_template');
 
-        rooms.forEach(function(room) {
-            var el = template.cloneNode(true);
-            el.id = room.id;
-            el.querySelector('.name').innerHTML = room.name;
-            document.querySelector('.rooms').appendChild(el);
+        config.rooms.forEach(function(row) {
+            // Create row to hold these rooms
+            var target = document.createElement('div');
+            target.classList.add('columns');
+            root.appendChild(target);
+
+            // Add rooms
+            row.forEach(function(room){
+                var el = template.cloneNode(true);
+                el.id = "";
+                el.querySelector('.room').id = room.id;
+                el.querySelector('.room .name').innerHTML = room.name;
+                target.appendChild(el);
+            });
         });
 
         template.remove();
@@ -26,13 +39,16 @@ window.RoomTracker = {
      * Load vacancy information for all rooms
      */
     getRoomData: function() {
+        // Flatten the rows out of the rooms
+        var rooms = [].concat.apply([], config.rooms);
+
         var now = new Date();
         var tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1);
         return gapi.client.calendar.freebusy.query({
             maxResults: 100,
             timeMin: now,
             timeMax: tomorrow,
-            items: config.rooms.map(function(room){ return {id: room.resourceID}; }),
+            items: rooms.map(function(room){ return {id: room.resourceID}; }),
         });
     },
 
@@ -42,18 +58,26 @@ window.RoomTracker = {
      */
     tick: function() {
         console.log('tick');
-        RoomTracker.getRoomData().then(RoomTracker.updateTable);
-        setTimeout(RoomTracker.tick, 30*1000);
+
+        // Reset the timer (allows firing tick() manually)
+        clearTimeout(RoomTracker.tickTimer);
+
+        // Update the rooms
+        RoomTracker.getRoomData().then(RoomTracker.updateUI);
+
+        // Restart the timer
+        RoomTracker.tickTimer = setTimeout(RoomTracker.tick, 30*1000);
     },
 
     /**
      * Update the main table with the new data
      */
-    updateTable: function(response) {
-        console.log('Got freebusy response', response);
+    updateUI: function(response) {
 
-        config.rooms.forEach(function(room) {
+        // Flatten the rows out of the rooms
+        var rooms = [].concat.apply([], config.rooms);
 
+        rooms.forEach(function(room) {
             // Parse and setup datastructures
             var el = document.getElementById(room.id);
             var data = response.result.calendars[room.resourceID];
@@ -63,9 +87,10 @@ window.RoomTracker = {
             var currentStatus = el.querySelector('.current .status');
             var currentDuration = el.querySelector('.current .duration');
             var upcomingStatus = el.querySelector('.upcoming .status');
+            var upcomingDuration = el.querySelector('.upcoming .duration');
 
             // Clear the room!
-            el.querySelectorAll('.indicator, .current_status, .current_duration, .upcoming_status').forEach(function(cell){
+            el.querySelectorAll('.indicator, .current .status, .current .duration, .upcoming .status, .upcoming .duration').forEach(function(cell){
                 cell.innerHTML = '&nbsp;';
             });
 
@@ -90,15 +115,16 @@ window.RoomTracker = {
             if (now < start) {
                 RoomTracker.setIndicator(el, true);
                 currentStatus.innerHTML = 'Vrij tot '+RoomTracker.printTime(start)+' uur';
-                currentDuration.innerHTML = RoomTracker.diffInMinutes(now, start)+' minuten';
+                currentDuration.innerHTML = RoomTracker.humanTimeDiff(now, start);
                 upcomingStatus.innerHTML = 'Daarna bezet tot '+RoomTracker.printTime(end)+' uur';
+                upcomingDuration.innerHTML = RoomTracker.humanTimeDiff(start, end);
                 return;
             }
 
             // Currently occupied, show that in the first column
             RoomTracker.setIndicator(el, false);
             currentStatus.innerHTML = 'Bezet tot '+RoomTracker.printTime(end)+' uur';
-            currentDuration.innerHTML = RoomTracker.diffInMinutes(now, end)+' minuten';
+            currentDuration.innerHTML = RoomTracker.humanTimeDiff(now, end);
 
             // If there are no further events planned, the rest of the day is free
             if (events.length == 1) {
@@ -109,6 +135,7 @@ window.RoomTracker = {
             // Otherwise, show the time until the second event
             var secondStart = new Date(events[1].start);
             upcomingStatus.innerHTML = 'Daarna vrij tot '+RoomTracker.printTime(secondStart)+' uur';
+            upcomingDuration.innerHTML = RoomTracker.humanTimeDiff(now, secondStart);
         });
     },
 
@@ -127,8 +154,18 @@ window.RoomTracker = {
      * @param  {Date} b
      * @return {integer}
      */
-    diffInMinutes: function(a, b) {
-        return Math.round(Math.abs(a - b) / 60000);
+    humanTimeDiff: function(a, b) {
+        var inMinutes = Math.round(Math.abs(a - b) / 60000);
+        if (inMinutes <  60) {
+            return inMinutes + ' min';
+        }
+
+        var hours = Math.floor(inMinutes / 60);
+        var minutes = inMinutes % 60;
+        if (minutes == 0) {
+            return hours + ' uur ';
+        }
+        return hours + ' uur ' + minutes + ' min';
     },
 
     /**
@@ -181,6 +218,14 @@ window.RoomTracker = {
                 });
             });
         });
+    },
+
+    /**
+     * Show and update a real-time clock in the top-right of the screen
+     */
+    displayClock: function() {
+        document.getElementById('time').innerHTML = RoomTracker.printTime(new Date());
+        setTimeout(RoomTracker.displayClock, 5000);
     },
 };
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
 
-    <title>I can haz quick meeting?</title>
+    <title>I can haz meeting?</title>
 
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.0/css/bulma.min.css">
     <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" integrity="sha384-dNpIIXE8U05kAbPhy3G1cz+yZmTzA6CY8Vg/u2L9xRnHjJiAK76m2BIEaSEV+/aU" crossorigin="anonymous">
@@ -29,11 +29,13 @@
     <meta name="theme-color" content="#ffffff">
 </head>
 <body>
-    <header class="hero is-primary is-bold">
+    <header class="hero is-warning is-bold">
         <div class="hero-body">
             <div class="container">
                 <h1 class="title">
-                    I can haz quick meeting?
+                    I can haz meeting?
+
+                    <span class="pull-right" id="time"></span>
                 </h1>
                 <h2 class="subtitle">
                     A #TeamRechts project
@@ -62,12 +64,17 @@
             </div>
 
             <div class="container rooms is-clearfix">
+                <!-- Container for adding rooms -->
+            </div>
+
+            <!-- Template for a room -->
+            <div class="column is-3" id="room_template">
                 <div class="room box">
                     <article class="media">
                         <div class="media-content">
                             <div class="content">
                                 <p>
-                                    <span class="indicator tag is-primary"></span>
+                                    <span class="indicator tag">Onbekend</span>
                                     <strong class=name>Maaskamer</strong><br>
                                     <span class="current">
                                         <small class="status"></small>
@@ -75,6 +82,7 @@
                                     </span><br>
                                     <span class="upcoming">
                                         <small class="status"></small>
+                                        <small class="duration is-pulled-right"></small>
                                     </span>
                                 </p>
                             </div>
@@ -82,6 +90,7 @@
                     </article>
                 </div>
             </div>
+            <!-- end of template -->
         </div>
     </main>
 
