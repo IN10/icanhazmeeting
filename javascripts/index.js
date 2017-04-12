@@ -19,7 +19,7 @@ window.RoomTracker = {
         config.rooms.forEach(function(row) {
             // Create row to hold these rooms
             var target = document.createElement('div');
-            target.classList.add('columns', 'is-desktop');
+            target.classList.add('columns');
             root.appendChild(target);
 
             // Add rooms
