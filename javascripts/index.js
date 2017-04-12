@@ -55,7 +55,7 @@ window.RoomTracker = {
 
 
     /**
-     * Run the main process to refresh data on a 30 second timer
+     * Run the main process to refresh data on a timer
      */
     tick: function() {
         console.log('tick');
@@ -67,7 +67,7 @@ window.RoomTracker = {
         RoomTracker.getRoomData().then(RoomTracker.updateUI);
 
         // Restart the timer
-        RoomTracker.tickTimer = setTimeout(RoomTracker.tick, 30*1000);
+        RoomTracker.tickTimer = setTimeout(RoomTracker.tick, 15*1000);
     },
 
     /**
