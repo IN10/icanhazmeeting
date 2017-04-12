@@ -14,4 +14,9 @@ window.config = {
             { id: 'standupcreate', name: 'Standup Create', resourceID: '' },
         ],
     ],
+    quotes: [
+        "People who enjoy meetings should not be in charge of anything.",
+        "Meetings are indispensable when you don't want to do anything.",
+        "Has anyone ever said, 'I wish I could go to more meetings today'?",
+    ]
 };

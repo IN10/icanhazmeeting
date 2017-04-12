@@ -6,6 +6,7 @@ window.RoomTracker = {
         RoomTracker.createRooms();
         RoomTracker.displayClock();
         RoomTracker.loginWithGoogle();
+        RoomTracker.showQuote();
     },
 
     /**
@@ -226,6 +227,15 @@ window.RoomTracker = {
     displayClock: function() {
         document.getElementById('time').innerHTML = RoomTracker.printTime(new Date());
         setTimeout(RoomTracker.displayClock, 5000);
+    },
+
+    /**
+     * Show a different quote every 5 minutes
+     */
+    showQuote: function() {
+        var random_quote = config.quotes[Math.floor(Math.random()*config.quotes.length)];
+        document.getElementById('quote').innerHTML = random_quote
+        setTimeout(RoomTracker.showQuote, 60*1000);
     },
 };
 
