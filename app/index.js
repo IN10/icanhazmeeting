@@ -6,6 +6,7 @@ window.RoomTracker = {
         RoomTracker.createRooms();
         RoomTracker.displayClock();
         RoomTracker.loginWithGoogle();
+        RoomTracker.showQuote();
     },
 
     /**
@@ -19,7 +20,7 @@ window.RoomTracker = {
         config.rooms.forEach(function(row) {
             // Create row to hold these rooms
             var target = document.createElement('div');
-            target.classList.add('columns', 'is-desktop');
+            target.classList.add('columns');
             root.appendChild(target);
 
             // Add rooms
@@ -54,7 +55,7 @@ window.RoomTracker = {
 
 
     /**
-     * Run the main process to refresh data on a 30 second timer
+     * Run the main process to refresh data on a timer
      */
     tick: function() {
         console.log('tick');
@@ -66,7 +67,7 @@ window.RoomTracker = {
         RoomTracker.getRoomData().then(RoomTracker.updateUI);
 
         // Restart the timer
-        RoomTracker.tickTimer = setTimeout(RoomTracker.tick, 30*1000);
+        RoomTracker.tickTimer = setTimeout(RoomTracker.tick, 15*1000);
     },
 
     /**
@@ -226,6 +227,15 @@ window.RoomTracker = {
     displayClock: function() {
         document.getElementById('time').innerHTML = RoomTracker.printTime(new Date());
         setTimeout(RoomTracker.displayClock, 5000);
+    },
+
+    /**
+     * Show a different quote every 5 minutes
+     */
+    showQuote: function() {
+        var random_quote = config.quotes[Math.floor(Math.random()*config.quotes.length)];
+        document.getElementById('quote').innerHTML = random_quote
+        setTimeout(RoomTracker.showQuote, 60*1000);
     },
 };
 
