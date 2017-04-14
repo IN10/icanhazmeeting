@@ -2,6 +2,7 @@ window.config = {
     oauth: {
         client_id: '',
     },
+    claimCalender: '',
     rooms: [
         [
             { id: 'maaskamer',     name: 'Maaskamer',      resourceID: '' },

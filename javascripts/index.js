@@ -7,6 +7,8 @@ window.RoomTracker = {
         RoomTracker.displayClock();
         RoomTracker.loginWithGoogle();
         RoomTracker.showQuote();
+
+        document.querySelector('.rooms').addEventListener('click', RoomTracker.claimRoom);
     },
 
     /**
@@ -208,7 +210,7 @@ window.RoomTracker = {
             gapi.client.init({
                 discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"],
                 clientId: config.oauth.client_id,
-                scope: "https://www.googleapis.com/auth/calendar.readonly",
+                scope: "https://www.googleapis.com/auth/calendar",
             }).then(function () {
                 // Setup sign-in callback and trigger it (if previously logged-in)
                 gapi.auth2.getAuthInstance().isSignedIn.listen(signInCallback);
@@ -237,6 +239,52 @@ window.RoomTracker = {
         document.getElementById('quote').innerHTML = random_quote
         setTimeout(RoomTracker.showQuote, 60*1000);
     },
+
+    /**
+     * Event handler for claiming an available room
+     * @param  {Event} event
+     */
+    claimRoom: function(event) {
+        console.log(event);
+        // Only operate when buttons are clicked
+        var button = event.target;
+        if (!button.classList.contains('claim')) {
+            return;
+        }
+        event.preventDefault();
+
+        // Set loading state
+        button.classList = "button is-loading is-warning";
+
+        // Find room settings
+        var el = event.path.filter(function(el){ return el.classList && el.classList.contains('room'); })[0];
+        var room_id = el.id;
+        var rooms = [].concat.apply([], config.rooms);
+        var room = rooms.filter(function(room) { return room.id == room_id })[0];
+
+        // Create event specification
+        var now = new Date();
+        var end = new Date();
+        end.setMinutes(now.getMinutes() + 30);
+        var request = gapi.client.calendar.events.insert({
+          'calendarId': config.claimCalendar,
+          'location': room.name,
+          'attendees': [room.resourceID],
+          'summary': 'Quick meeting',
+          'start': {'dateTime': now.toISOString(), 'timeZone': 'Europe/Amsterdam'},
+          'end': {'dateTime': end.toISOString(), 'timeZone': 'Europe/Amsterdam'},
+        });
+
+        // Create the event
+        request.execute(function(event) {
+            // Add an one second timeout for extra effect
+            setTimeout(function() {
+                // Set completed state
+                button.classList = "button is-success";
+                button.innerHTML = "Geclaimd!";
+            }, 1000);
+        });
+    }
 };
 
 // Initialize when the DOM is ready
