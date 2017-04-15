@@ -1,0 +1,19 @@
+{
+  "name": "icanhazmeeting",
+  "version": "0.0.0",
+  "description": "## Installation 1. Create a OAuth2 client ID on the [Google API Manager](https://console.developers.google.com). Choose \"Web Application\" as the Application type and add [localhost:8080](http://localhost:8080) to the Authorised Javascript origins. 1. Copy `config.example.js` to `config.js` and fill in details as required. The `rows` property is a two-dimensional array to enable display into rows: use a maximum of 4 entries per sub-array. 1. Serve the main folder using a web server on [localhost:8080](http://localhost:8080). If you have PHP available on the terminal, you can accomplish this by running the following command in this folder:     ```bash     php -S localhost:8080     ```",
+  "main": "javascripts/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IN10/icanhazmeeting.git"
+  },
+  "author": "Jakob Buis <jakob@jakobbuis.nl>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IN10/icanhazmeeting/issues"
+  },
+  "homepage": "https://github.com/IN10/icanhazmeeting#readme"
+}
