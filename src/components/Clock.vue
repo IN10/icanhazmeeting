@@ -15,8 +15,9 @@ export default {
     methods: {
         updateTime() {
             const now = new Date();
-            this.hours = now.getHours();
-            this.minutes = now.getMinutes();
+            this.hours = `0${now.getHours()}`.slice(-2);
+            this.minutes = `0${now.getMinutes()}`.slice(-2);
+
             setTimeout(this.updateTime, 5000);
         },
     },
