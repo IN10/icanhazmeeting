@@ -1,5 +1,5 @@
 <template>
-    <div class="modal">
+    <div class="modal is-active" v-if="isActive">
         <div class="modal-background"></div>
         <div class="modal-card">
             <header class="modal-card-head">
@@ -18,7 +18,12 @@
 </template>
 
 <script>
-    export default {
-        name: 'modal',
-    };
+export default {
+    name: 'modal',
+    data() {
+        return {
+            isActive: true,
+        };
+    },
+};
 </script>
