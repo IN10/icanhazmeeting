@@ -3,29 +3,25 @@
 </template>
 
 <script>
+import Config from '../config';
+
 export default {
     name: 'quote',
     data() {
-        const quotes = [
-            'People who enjoy meetings should not be in charge of anything.',
-            'Meetings are indispensable when you don\'t want to do anything.',
-            'Has anyone ever said, \'I wish I could go to more meetings today?',
-        ];
         return {
             timeOut: 30 * 1000,
-            quotes,
-            currentQuote: quotes[0],
+            currentQuote: null,
         };
     },
     methods: {
         updateQuote() {
-            this.currentQuote = this.quotes[Math.floor(Math.random() * this.quotes.length)];
+            this.currentQuote = Config.quotes[Math.floor(Math.random() * Config.quotes.length)];
             setTimeout(this.updateQuote, this.timeOut);
         },
     },
 
     mounted() {
-        setTimeout(this.updateQuote, this.timeOut);
+        this.updateQuote();
     },
 };
 </script>
