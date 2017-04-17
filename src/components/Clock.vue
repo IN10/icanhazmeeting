@@ -1,5 +1,5 @@
 <template>
-  <span class="pull-right">{{ hours }}:{{ minutes }}</span>
+    <span class="is-pulled-right">{{ hours }}:{{ minutes }}</span>
 </template>
 
 <script>
