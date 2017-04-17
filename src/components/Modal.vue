@@ -11,19 +11,48 @@
                 </p>
             </section>
             <footer class="modal-card-foot">
-                <a class="button is-primary">Aanmelden met Google Calendar</a>
+                <a class="button is-primary" @click="authenticate">Aanmelden met Google Calendar</a>
             </footer>
         </div>
     </div>
 </template>
 
 <script>
+import Config from '../config';
+
 export default {
     name: 'modal',
+
     data() {
         return {
             isActive: true,
         };
+    },
+
+    mounted() {
+        /* global gapi */
+        gapi.load('client:auth2', () => {
+            gapi.client.init({
+                discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
+                clientId: Config.oauth_client_id,
+                scope: 'https://www.googleapis.com/auth/calendar.readonly',
+            }).then(() => {
+                const signedIn = gapi.auth2.getAuthInstance().isSignedIn.get();
+
+                if (signedIn) {
+                    this.isActive = false;
+                }
+                gapi.auth2.getAuthInstance().isSignedIn.listen((isSignedIn) => {
+                    this.isActive = !isSignedIn;
+                });
+            });
+        });
+    },
+
+    methods: {
+        authenticate() {
+            gapi.auth2.getAuthInstance().signIn();
+        },
     },
 };
 </script>
