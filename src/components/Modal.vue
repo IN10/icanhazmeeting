@@ -19,6 +19,7 @@
 
 <script>
 import Config from '../config';
+import Event from '../Event';
 
 export default {
     name: 'modal',
@@ -37,14 +38,19 @@ export default {
                 clientId: Config.oauth_client_id,
                 scope: 'https://www.googleapis.com/auth/calendar.readonly',
             }).then(() => {
-                const signedIn = gapi.auth2.getAuthInstance().isSignedIn.get();
-
-                if (signedIn) {
-                    this.isActive = false;
-                }
-                gapi.auth2.getAuthInstance().isSignedIn.listen((isSignedIn) => {
+                const callback = (isSignedIn) => {
                     this.isActive = !isSignedIn;
-                });
+                    Event.$emit('signInStatusChanged', isSignedIn);
+                };
+                gapi.auth2.getAuthInstance().isSignedIn.listen(callback);
+                callback(gapi.auth2.getAuthInstance().isSignedIn.get());
+
+                // const signedIn = gapi.auth2.getAuthInstance().isSignedIn.get();
+
+                // if (signedIn) {
+                //     this.isActive = false;
+                //     Event.$emit('signInStatusChanged', signedIn);
+                // }
             });
         });
     },
