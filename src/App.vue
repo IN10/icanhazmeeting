@@ -17,9 +17,7 @@
         <div class="container">
             <modal />
 
-            <div class="container rooms is-clearfix">
-                <room />
-            </div>
+            <rooms />
         </div>
     </main>
   </div>
@@ -29,7 +27,7 @@
 import Clock from './components/Clock';
 import Quote from './components/Quote';
 import Modal from './components/Modal';
-import Room from './components/Room';
+import Rooms from './components/Rooms';
 
 export default {
     name: 'app',
@@ -37,14 +35,11 @@ export default {
         Clock,
         Quote,
         Modal,
-        Room,
+        Rooms,
     },
 };
 </script>
 
 <style lang="scss">
     @import './node_modules/bulma/bulma.sass';
-    .rooms {
-        margin-top: 1em;
-    }
 </style>
