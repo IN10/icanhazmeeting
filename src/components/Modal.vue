@@ -44,13 +44,6 @@ export default {
                 };
                 gapi.auth2.getAuthInstance().isSignedIn.listen(callback);
                 callback(gapi.auth2.getAuthInstance().isSignedIn.get());
-
-                // const signedIn = gapi.auth2.getAuthInstance().isSignedIn.get();
-
-                // if (signedIn) {
-                //     this.isActive = false;
-                //     Event.$emit('signInStatusChanged', signedIn);
-                // }
             });
         });
     },
