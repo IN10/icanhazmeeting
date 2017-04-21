@@ -1,7 +1,7 @@
 <template>
     <div class="container rooms is-clearfix">
         <div class="columns" v-for="row in rows">
-            <room v-for="room in row" :key="room.id" v-bind:room="room"></room>
+            <room v-for="room in row" :key="room.id" v-bind:config="room" v-bind:freebusy="freebusy[room.resourceID]"></room>
         </div>
     </div>
 </template>
@@ -19,13 +19,35 @@ export default {
     data() {
         return {
             rows: Config.rooms,
+            freebusy: {},
         };
     },
     mounted() {
-        Event.$on('signInStatusChanged', (signedIn) => {
-            // eslint-disable-next-line
-            console.log('sign in status changed', signedIn);
-        });
+        Event.$on('signInStatusChanged', this.updateRooms);
+    },
+
+    methods: {
+        updateRooms(signedIn) {
+            if (!signedIn) {
+                return;
+            }
+
+            // Flatten the rows out of the rooms
+            const rooms = [].concat(...Config.rooms);
+
+            const now = new Date();
+            const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+            /* global gapi */
+            gapi.client.calendar.freebusy.query({
+                maxResults: 100,
+                timeMin: now,
+                timeMax: tomorrow,
+                items: rooms.map(room => ({ id: room.resourceID })),
+            }).then((response) => {
+                this.freebusy = response.result.calendars;
+                setTimeout(this.updateRooms, 15 * 1000);
+            });
+        },
     },
 };
 </script>

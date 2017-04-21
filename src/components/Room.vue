@@ -6,8 +6,9 @@
                     <div class="content">
                         <p>
                             <!-- <span class="indicator tag">{{ room.status }}</span> -->
-                            <strong class=name>{{ room.name }}</strong><br>
-                            <small>{{ room.resourceID }}</small>
+                            <strong class=name>{{ config.name }}</strong><br>
+                            <small>{{ config.resourceID }}</small>
+                            <pre>{{ freebusy }}</pre>
                             <!-- <span class="current">
                                 <small class="status">{{ room.current.status }}</small>
                                 <small class="duration is-pulled-right">{{ room.current.duration }}</small>
@@ -27,7 +28,7 @@
 <script>
     export default {
         name: 'room',
-        props: ['room'],
+        props: ['config', 'freebusy'],
     };
 </script>
 
