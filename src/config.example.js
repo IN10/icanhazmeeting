@@ -7,9 +7,9 @@ export default {
             { id: 'podiumkamer', name: 'Podiumkamer', resourceID: '' },
         ],
         [
+            { id: 'standupcreate', name: 'Standup glas', resourceID: '' },
             { id: 'standuplinks', name: 'Standup links', resourceID: '' },
             { id: 'standuprechts', name: 'Standup rechts', resourceID: '' },
-            { id: 'standupcreate', name: 'Standup Create', resourceID: '' },
         ],
     ],
     quotes: [
