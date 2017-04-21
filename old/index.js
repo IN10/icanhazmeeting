@@ -136,7 +136,7 @@ window.RoomTracker = {
             // Otherwise, show the time until the second event
             var secondStart = new Date(events[1].start);
             upcomingStatus.innerHTML = 'Daarna vrij tot '+RoomTracker.printTime(secondStart)+' uur';
-            upcomingDuration.innerHTML = RoomTracker.humanTimeDiff(now, secondStart);
+            upcomingDuration.innerHTML = RoomTracker.humanTimeDiff(end, secondStart);
         });
     },
 
