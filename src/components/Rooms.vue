@@ -1,7 +1,7 @@
 <template>
     <div class="container rooms is-clearfix">
         <div class="columns" v-for="row in rows">
-            <room v-for="room in row" :key="room.id" v-bind:config="room" v-bind:freebusy="freebusy[room.resourceID]"></room>
+            <room v-for="room in row" :key="room.id" v-bind:config="room" v-bind:freebusy="freebusy[room.resourceID].busy"></room>
         </div>
     </div>
 </template>
