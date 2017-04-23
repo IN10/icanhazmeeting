@@ -41,7 +41,7 @@ export default {
             gapi.client.calendar.freebusy.query({
                 timeMin: now,
                 timeMax: tomorrow,
-                items: [this.config.resourceID],
+                items: [{ id: this.config.resourceID }],
             }).then((response) => {
                 this.events = response.result.calendars[this.config.resourceID];
                 setTimeout(this.getFreeBusyInformation, 15 * 1000);
