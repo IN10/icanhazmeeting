@@ -36,7 +36,7 @@ export default {
             gapi.client.init({
                 discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
                 clientId: Config.oauth_client_id,
-                scope: 'https://www.googleapis.com/auth/calendar.readonly',
+                scope: 'https://www.googleapis.com/auth/calendar',
             }).then(() => {
                 const callback = (isSignedIn) => {
                     this.isActive = !isSignedIn;

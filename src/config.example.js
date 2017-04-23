@@ -1,5 +1,6 @@
 export default {
     oauth_client_id: '',
+    meeting_calendar: '',
     rooms: [
         [
             { name: 'Maaskamer', resourceID: '' },
