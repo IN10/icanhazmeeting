@@ -15,8 +15,8 @@
 
     <main>
         <div class="container">
+            <notification />
             <modal />
-
             <rooms />
         </div>
     </main>
@@ -28,6 +28,7 @@ import Clock from './components/Clock';
 import Quote from './components/Quote';
 import Modal from './components/Modal';
 import Rooms from './components/Rooms';
+import Notification from './components/Notification';
 
 export default {
     name: 'app',
@@ -36,6 +37,7 @@ export default {
         Quote,
         Modal,
         Rooms,
+        Notification,
     },
 };
 </script>

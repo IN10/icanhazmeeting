@@ -7,11 +7,12 @@
 </template>
 
 <script>
+import Event from '../Event';
 import Config from '../config';
 
 export default {
     name: 'claim',
-    props: ['free', 'duration', 'resourceID'],
+    props: ['free', 'duration', 'resourceID', 'roomName'],
     data() {
         return {
             // Basic state machine for the button, initial -> processing
@@ -60,7 +61,7 @@ export default {
                     attendees: [{ email: this.resourceID }],
                 },
             }).execute(() => {
-                this.$emit('claimed');
+                Event.$emit('claimed', { name: this.roomName, end, resourceID: this.resourceID });
                 this.processingState = 'initial';
             });
         },

@@ -10,8 +10,7 @@
                         </p>
                         <p>
                             <claim v-bind:free="free" v-bind:duration="duration"
-                                   v-bind:resourceID="config.resourceID"
-                                   v-on:claimed="getFreeBusyInformation" />
+                                   v-bind:resourceID="config.resourceID" v-bind:roomName="config.name" />
                         </p>
                     </div>
                 </div>
@@ -39,6 +38,7 @@ export default {
 
     mounted() {
         Event.$on('signedIn', this.getFreeBusyInformation);
+        Event.$on('claimed', this.getFreeBusyInformation);
     },
 
     methods: {
