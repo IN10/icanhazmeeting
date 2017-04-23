@@ -2,14 +2,14 @@ export default {
     oauth_client_id: '',
     rooms: [
         [
-            { id: 'maaskamer', name: 'Maaskamer', resourceID: '' },
-            { id: 'spreekkamer', name: 'Spreekkamer', resourceID: '' },
-            { id: 'podiumkamer', name: 'Podiumkamer', resourceID: '' },
+            { name: 'Maaskamer', resourceID: '' },
+            { name: 'Spreekkamer', resourceID: '' },
+            { name: 'Podiumkamer', resourceID: '' },
         ],
         [
-            { id: 'standupcreate', name: 'Standup glas', resourceID: '' },
-            { id: 'standuplinks', name: 'Standup links', resourceID: '' },
-            { id: 'standuprechts', name: 'Standup rechts', resourceID: '' },
+            { name: 'Standup glas', resourceID: '' },
+            { name: 'Standup links', resourceID: '' },
+            { name: 'Standup rechts', resourceID: '' },
         ],
     ],
     quotes: [
