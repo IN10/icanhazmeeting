@@ -40,7 +40,9 @@ export default {
             }).then(() => {
                 const callback = (isSignedIn) => {
                     this.isActive = !isSignedIn;
-                    Event.$emit('signInStatusChanged', isSignedIn);
+                    if (isSignedIn) {
+                        Event.$emit('signedIn');
+                    }
                 };
                 gapi.auth2.getAuthInstance().isSignedIn.listen(callback);
                 callback(gapi.auth2.getAuthInstance().isSignedIn.get());
