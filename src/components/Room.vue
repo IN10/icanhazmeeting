@@ -43,7 +43,7 @@ export default {
                 timeMax: tomorrow,
                 items: [{ id: this.config.resourceID }],
             }).then((response) => {
-                this.events = response.result.calendars[this.config.resourceID];
+                this.freebusy = response.result.calendars[this.config.resourceID].busy;
                 setTimeout(this.getFreeBusyInformation, 15 * 1000);
             });
         },
