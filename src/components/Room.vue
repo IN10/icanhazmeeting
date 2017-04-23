@@ -1,71 +1,94 @@
 <template>
-    <div class="column is-4 room">
+    <div class="column is-3 room">
         <div class="room box">
             <article class="media">
                 <div class="media-content">
                     <div class="content">
                         <p>
-                            <span class="indicator tag" v-bind:class="indicatorClass">{{ status }}</span>
-                            <strong class=name>{{ config.name }}</strong><br>
-                            <span class="current">
-                                <small class="status">{{ current.status }}</small>
-                                <small class="duration is-pulled-right">{{ current.duration }}</small>
-                            </span><br>
-                            <span class="upcoming">
-                                <small class="status">{{ upcoming.status }}</small>
-                                <small class="duration is-pulled-right">{{ upcoming.duration }}</small>
-                            </span>
+                            <strong class=name>{{ config.name }}</strong>
+                            <span class="is-pulled-right indicator tag" v-bind:class="indicatorClass">{{ duration }}</span>
                         </p>
                     </div>
                 </div>
             </article>
         </div>
     </div>
-</template>o
+</template>
 
 <script>
-    export default {
-        name: 'room',
-        props: ['config', 'freebusy'],
+import Event from '../Event';
 
-        computed: {
-            // The status indicator of a
-            status() {
-                if (this.freebusy.length === 0) {
-                    return 'Vrij';
-                }
+export default {
+    name: 'room',
+    props: ['config'],
 
-                const now = new Date();
-                const start = new Date(this.freebusy[0].start);
-                const end = new Date(this.freebusy[0].end);
+    data() {
+        return {
+            freebusy: [],
+        };
+    },
 
-                if (now > start && now < end) {
-                    return 'Bezet';
-                }
-                return 'Vrij';
-            },
+    mounted() {
+        Event.$on('signedIn', this.getFreeBusyInformation);
+    },
 
-            indicatorClass() {
-                if (this.status === 'Vrij') {
-                    return 'is-success';
-                }
-                return 'is-danger';
-            },
+    methods: {
+        getFreeBusyInformation() {
+            const now = new Date();
+            const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
 
-            current() {
-                return { status: 'leeg', duration: 5 };
-            },
-            upcoming() {
-                return { status: 'leeg', duration: 5 };
-            },
+            /* global gapi */
+            gapi.client.calendar.freebusy.query({
+                timeMin: now,
+                timeMax: tomorrow,
+                items: [this.config.resourceID],
+            }).then((response) => {
+                this.events = response.result.calendars[this.config.resourceID];
+                setTimeout(this.getFreeBusyInformation, 15 * 1000);
+            });
         },
-    };
+    },
+
+    computed: {
+        // The status indicator of a
+        duration() {
+            if (this.freebusy.length === 0) {
+                return 'Hele dag';
+            }
+
+            const now = new Date();
+            const start = new Date(this.freebusy[0].start);
+            const end = new Date(this.freebusy[0].end);
+            let minutes = null;
+
+            if (now < start) {
+                minutes = Math.floor((start - now) / 1000 / 60);
+            } else {
+                minutes = Math.floor((end - now) / 1000 / 60);
+            }
+            return `${minutes} min`;
+        },
+
+        indicatorClass() {
+            if (this.freebusy.length === 0) {
+                return 'is-success';
+            }
+
+            const now = new Date();
+            const start = new Date(this.freebusy[0].start);
+            const end = new Date(this.freebusy[0].end);
+
+            if (now > start && now < end) {
+                return 'is-danger';
+            }
+            return 'is-success';
+        },
+    },
+};
 </script>
 
 <style scoped>
-    .room {
-        height: 7em;
-        min-width: 20em;
-        margin-bottom: 2em;
-    }
+.indicator {
+    width: 6em;
+}
 </style>
