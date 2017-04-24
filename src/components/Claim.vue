@@ -22,7 +22,7 @@ export default {
 
     computed: {
         claimDuration() {
-            return Math.min(this.duration, 30);
+            return Math.min(this.duration - 1, 30);
         },
 
         displayClass() {
