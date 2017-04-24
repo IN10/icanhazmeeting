@@ -1,5 +1,5 @@
 <template>
-    <div class="column is-3 room">
+    <div class="column is-4 room">
         <div class="room box">
             <article class="media">
                 <div class="media-content">
