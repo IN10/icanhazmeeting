@@ -1,5 +1,5 @@
 <template>
-    <button v-if="free"
+    <button v-if="shouldDisplay"
             class="button is-small" v-bind:class="displayClass"
             @click="claim">
                 {{ claimDuration }} min reserveren
@@ -30,6 +30,10 @@ export default {
                 return 'is-light';
             }
             return 'is-loading is-warning';
+        },
+
+        shouldDisplay() {
+            return this.free && this.claimDuration > 0;
         },
     },
 
