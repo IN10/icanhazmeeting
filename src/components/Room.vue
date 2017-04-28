@@ -105,6 +105,13 @@ export default {
             if (this.freebusy.length === 0) {
                 return 'Hele dag';
             }
+
+            if (this.duration > 60) {
+                return '> 1 uur';
+            } else if (this.duration === 60) {
+                return '1 uur';
+            }
+
             return `${this.duration} min`;
         },
 
