@@ -27,7 +27,7 @@ export default {
 
         displayClass() {
             if (this.processingState === 'initial') {
-                return 'is-light';
+                return 'is-primary';
             }
             return 'is-loading is-warning';
         },
@@ -62,7 +62,7 @@ export default {
                     description: 'Meeting ingeschoten via https://icanhazmeeting.public.in10projecten.nl',
                     start: { dateTime: start.toISOString() },
                     end: { dateTime: end.toISOString() },
-                    attendees: [{ email: this.resourceID }],
+                    attendees: [{ email: this.resourceID }, { email: 'primary' }],
                 },
             }).execute(() => {
                 Event.$emit('claimed', { name: this.roomName, end, resourceID: this.resourceID });
