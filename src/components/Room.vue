@@ -6,7 +6,7 @@
                     <div class="content">
                         <p>
                             <strong class=name>{{ config.name }}</strong>
-                            <span class="is-pulled-right indicator tag" v-bind:class="indicatorClass">{{ durationDescription }}</span>
+                            <span class="is-pulled-right indicator tag" v-bind:class="indicatorClass">{{ durationDescription }} {{ statusText }}</span>
                         </p>
                         <p>
                             <claim v-bind:free="free" v-bind:duration="duration"
@@ -98,6 +98,14 @@ export default {
         },
 
         /**
+         * Human-readable textual description of current occupancy status
+         * @return {string}
+         */
+        statusText() {
+            return this.free ? 'vrij' : 'bezet';
+        },
+
+        /**
          * Duration description for human consumption
          * @return {string} either "X min" or "Hele dag"
          */
@@ -107,7 +115,7 @@ export default {
             }
 
             if (this.duration > 60) {
-                return '> 1 uur';
+                return '1+ uur';
             } else if (this.duration === 60) {
                 return '1 uur';
             }
@@ -127,9 +135,6 @@ export default {
 </script>
 
 <style scoped>
-.indicator {
-    width: 6em;
-}
 .room {
     min-height: 7em;
 }
