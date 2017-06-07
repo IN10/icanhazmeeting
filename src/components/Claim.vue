@@ -62,7 +62,7 @@ export default {
                     description: 'Meeting ingeschoten via https://icanhazmeeting.public.in10projecten.nl',
                     start: { dateTime: start.toISOString() },
                     end: { dateTime: end.toISOString() },
-                    attendees: [{ email: this.resourceID }, { email: 'primary' }],
+                    attendees: [{ email: this.resourceID }],
                 },
             }).execute(() => {
                 Event.$emit('claimed', { name: this.roomName, end, resourceID: this.resourceID });
