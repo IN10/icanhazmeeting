@@ -64,8 +64,9 @@ export default {
                     end: { dateTime: end.toISOString() },
                     attendees: [{ email: this.resourceID }],
                 },
-            }).execute(() => {
-                Event.$emit('claimed', { name: this.roomName, end, resourceID: this.resourceID });
+            }).execute((response) => {
+                const event = response.error ? 'claim-failed' : 'claimed';
+                Event.$emit(event, { name: this.roomName, end });
                 this.processingState = 'initial';
             });
         },
