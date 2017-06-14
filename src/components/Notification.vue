@@ -1,7 +1,6 @@
 <template>
-    <div class="notification" v-bind:class="displayClass" v-if="showNotification">
+    <div class="notification is-success" v-if="text">
         <span>{{ text }}</span>
-        <button class="button is-pulled-right" @click="undoAction">Ongedaan maken</button>
     </div>
 </template>
 
@@ -12,10 +11,7 @@ export default {
     name: 'notification',
     data() {
         return {
-            showNotification: false,
-            text: '',
-            displayClass: 'success',
-            undoAction: () => {},
+            text: null,
         };
     },
     mounted() {
@@ -23,8 +19,6 @@ export default {
     },
     methods: {
         roomClaimed(data) {
-            this.displayClass = 'is-success';
-
             // Construct the text content of the notification
             const end = new Date(data.end);
             const hours = `0${end.getHours()}`.slice(-2);
@@ -32,8 +26,7 @@ export default {
             this.text = `${data.name} is voor jou gereserveerd tot ${hours}:${minutes}`;
 
             // Show the notification for 20 seconds
-            this.showNotification = true;
-            setTimeout(() => { this.live = false; }, 20 * 1000);
+            setTimeout(() => { this.text = null; }, 20 * 1000);
         },
     },
 };
